@@ -52,7 +52,7 @@ html, body{
       position: fixed;
       bottom: 30px;
       left: calc(50% - 100px);
-      margin-left: 300px;
+      margin-bottom: 100px;
 }
   
 #virar:hover{
