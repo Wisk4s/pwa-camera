@@ -14,12 +14,14 @@ if ('serviceWorker' in navigator) {
 
 
 // configurando as constraintes do video stream
-var constraints = { video: { facingMode: "user" }, audio: false };
+var camMode = "user"; 
+var constraints = { video: { facingMode: camMode }, audio: false };
 // capturando os elementos em tela
 const cameraView = document.querySelector("#camera--view"),
   cameraOutput = document.querySelector("#camera--output"),
   cameraSensor = document.querySelector("#camera--sensor"),
-  cameraTrigger = document.querySelector("#camera--trigger")
+  cameraTrigger = document.querySelector("#camera--trigger"),
+  cameraSwitcher = document.querySelector("#virar")
 
 //Estabelecendo o acesso a camera e inicializando a visualização
 function cameraStart() {
@@ -42,5 +44,20 @@ cameraTrigger.onclick = function () {
   cameraOutput.src = cameraSensor.toDataURL("image/webp");
   cameraOutput.classList.add("taken");
 };
+
+virar.onclick = funciton () {
+  stopMediaTracks(cameraView.srcObject);
+  camMode = camMode === "user" ? "enviroment" : "user";
+  constraints = {video: {facingMode : camMode}, audio: false};
+  console.log(constraints)
+  cameraStart();
+}
+
+function stopMediaTracks(stream) {
+  stream.getTracks().forEach(track => {
+    track.stop();
+  });
+}
+
 // carrega imagem de camera quando a janela carregar
 window.addEventListener("load", cameraStart, false);
